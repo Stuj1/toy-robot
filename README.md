@@ -1,6 +1,9 @@
 # Toy Robot Game
 A simulation of a toy robot moving on a square tabletop, of dimensions 5 units x 5 units. The robot is free to roam around the surface of the table, but must be prevented from falling to destruction. Any movement that would result in the robot falling from the table must be prevented, however further valid movement commands must still be allowed.
 
+## Demo
+See a live demo: https://dancing-biscochitos-e87198.netlify.app/
+
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
@@ -12,7 +15,7 @@ These instructions will get you a copy of the project up and running on your loc
 ## Installing
 Clone the repository to your local machine
 Copy code
-git clone https://github.com/<username>/toy-robot-game.git
+git clone https://github.com/Stuj1/toy-robot.git
 
 ## Install the dependencies
 
@@ -72,7 +75,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Sass: CSS preprocessor that helps you write efficient and maintainable stylesheets.
 
 ## Authors
-Stuart Jennings - Initial work - Stuj1
+Stuart Jennings - Initial work - https://github.com/Stuj1
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
