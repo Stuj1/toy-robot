@@ -5,7 +5,6 @@ import {
   placeWall,
   rightRobot,
   report,
-  gameSlice,
 } from "../features/Game/gameSlice";
 import { Action, Dispatch } from "@reduxjs/toolkit";
 import {
@@ -65,6 +64,7 @@ export function translateInstructionsToActions(instructions: string): Action[] {
           return placeWall(pv);
         }
       }
+      return undefined;
     }
   );
 
