@@ -100,7 +100,7 @@ The following commands are acceptable:
 
 ## Follow up tasks:
 
-- Cancel previous timers on reset and new runs
+- Better timer handling - Cancel timers on reset, probably better to use redux state for this.
 - More validation - e.g. maximum number of commands in sequence
 - General tidy up - this was put together very quickly! I'd love a bit more time to make sure everything is where it should be.
 

@@ -91,6 +91,8 @@ export function executeActionsInSequence(
       dispatch(actions[i]);
       i++;
       timeoutId = setTimeout(next, delay);
+    } else {
+      clearTimeout(timeoutId);
     }
   }
   next();
