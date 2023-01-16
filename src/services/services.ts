@@ -1,64 +1,74 @@
 import {
-  IPlaceRobotValue,
-  IPlaceWallValue,
   leftRobot,
   moveRobot,
   placeRobot,
   placeWall,
   rightRobot,
   report,
+  gameSlice,
 } from "../features/Game/gameSlice";
 import { Action, Dispatch } from "@reduxjs/toolkit";
 import {
   FACINGFULL,
+  FACINGSHORT,
+  IPlaceRobotValue,
+  IPlaceWallValue,
   LEFT,
   MOVE,
   PLACE_ROBOT,
   PLACE_WALL,
   REPORT,
   RIGHT,
-  TFacingShort,
 } from "../types";
 
 /**
  * Translates text instructions to reducer actions
  * @param instructions
  */
-export function translateInstructionsToActions(instructions: string) {
+export function translateInstructionsToActions(instructions: string): Action[] {
   const lines = instructions.replace(/\r\n/g, "\n").split("\n");
 
-  return lines.map((line: string) => {
-    // Get parts of the instruction
-    const [action, args] = line.split(" ");
+  const actions: (Action | undefined)[] = lines.map(
+    (line: string): Action | undefined => {
+      // Get parts of the instruction
+      const [action, args] = line.split(" ");
 
-    // Lookup correct action
-    if (action === MOVE) return moveRobot();
-    if (action === LEFT) return leftRobot();
-    if (action === RIGHT) return rightRobot();
-    if (action === REPORT) return report();
-    if (action === PLACE_ROBOT) {
-      const [row, col, facing] = args.split(",");
-      if (
-        isCellValid(Number(row), Number(col)) &&
-        FACINGFULL.includes(facing)
-      ) {
-        const pv: IPlaceRobotValue = {
-          row: Number(row),
-          col: Number(col),
-          facing: facing.charAt(0) as TFacingShort,
-        };
-        return placeRobot(pv);
+      // Lookup correct action
+      if (action === MOVE) return moveRobot();
+      if (action === LEFT) return leftRobot();
+      if (action === RIGHT) return rightRobot();
+      if (action === REPORT) return report();
+      if (action === PLACE_ROBOT) {
+        const row = Number(args.split(",")[0]);
+        const col = Number(args.split(",")[1]);
+        const facingString = args.split(",")[2];
+
+        if (
+          !isNaN(row) &&
+          !isNaN(col) &&
+          isCellInRange(row, col) &&
+          FACINGFULL.includes(facingString)
+        ) {
+          const pv: IPlaceRobotValue = {
+            row,
+            col,
+            facing: FACINGSHORT[FACINGFULL.indexOf(facingString)],
+          };
+          return placeRobot(pv);
+        }
+      }
+      if (action === PLACE_WALL) {
+        const row = Number(args.split(",")[0]);
+        const col = Number(args.split(",")[1]);
+        if (!isNaN(row) && !isNaN(col) && isCellInRange(row, col)) {
+          const pv: IPlaceWallValue = { row, col };
+          return placeWall(pv);
+        }
       }
     }
-    if (action === PLACE_WALL) {
-      const [iRow, iCol] = args.split(",");
-      const pv: IPlaceWallValue = { row: Number(iRow), col: Number(iCol) };
-      return placeWall(pv);
-    }
+  );
 
-    // Default just report
-    return report();
-  });
+  return actions.filter((action) => !!action) as Action[];
 }
 
 /**
@@ -83,6 +93,6 @@ export function executeActionsInSequence(
   next();
 }
 
-export function isCellValid(row: number, col: number) {
+export function isCellInRange(row: number, col: number) {
   return row >= 1 && row <= 5 && col >= 1 && col <= 5;
 }

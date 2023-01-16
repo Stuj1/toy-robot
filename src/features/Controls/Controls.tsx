@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import styles from "./Controls.module.css";
 import "./Controls.scss";
-import { N, FACINGSHORT, FACINGFULL } from "../../types";
 import {
-  IPlaceRobotValue,
+  N,
+  FACINGSHORT,
+  FACINGFULL,
   IPlaceWallValue,
+  IPlaceRobotValue,
+} from "../../types";
+import {
   leftRobot,
   moveRobot,
   placeRobot,
@@ -31,7 +35,6 @@ const Controls = () => {
   const [list, setList] = useState("PLACE_ROBOT 2,3,NORTH");
 
   function runSequenceList() {
-    dispatch(reset());
     const actions = translateInstructionsToActions(list);
     executeActionsInSequence(actions, dispatch);
   }
@@ -51,12 +54,6 @@ const Controls = () => {
     <div className="controls">
       <div className={styles.row}>
         <div className={styles.buttonGroupWrapper}>
-          <button
-            className={styles.primaryButton}
-            onClick={() => dispatch(placeRobot(robot))}
-          >
-            PLACE ROBOT
-          </button>
           <input
             className={styles.textbox}
             aria-label="Set row"
@@ -82,17 +79,17 @@ const Controls = () => {
           <button className={styles.button} onClick={handleToggleFacing}>
             {toggleFacingDisplay}
           </button>
+          <button
+            className={styles.primaryButton}
+            onClick={() => dispatch(placeRobot(robot))}
+          >
+            PLACE ROBOT
+          </button>
         </div>
       </div>
 
       <div className={styles.row}>
         <div className={styles.buttonGroupWrapper}>
-          <button
-            className={styles.primaryButton}
-            onClick={() => dispatch(placeWall(wall))}
-          >
-            PLACE WALL
-          </button>
           <input
             className={styles.textbox}
             aria-label="Set wall row"
@@ -105,6 +102,12 @@ const Controls = () => {
             value={wall.col}
             onChange={(e) => setWall({ ...wall, col: Number(e.target.value) })}
           />
+          <button
+            className={styles.primaryButton}
+            onClick={() => dispatch(placeWall(wall))}
+          >
+            PLACE WALL
+          </button>
         </div>
       </div>
 
@@ -129,12 +132,13 @@ const Controls = () => {
       <div>
         <div className={styles.row}>
           <label htmlFor="sequence-commands" className={styles.label}>
-            Sequence commands:
+            Sequence commands
           </label>
         </div>
         <div className={styles.row}>
           <textarea
             id="sequence-commands"
+            data-testid="sequence-commands"
             cols={20}
             rows={10}
             value={list}

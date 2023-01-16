@@ -7,20 +7,21 @@ import {
   E,
   S,
   W,
-  TChar,
-  TFacingShort,
   NORTH,
   EAST,
   SOUTH,
   WEST,
+  IPlaceRobotValue,
+  IPlaceWallValue,
+  TChar,
+  TFacingShort,
 } from "../../types";
-import { isCellValid } from "../../services/services";
+import { isCellInRange } from "../../services/services";
 
 export interface GameState {
   grid: TChar[][];
   robot: { row: number; col: number; facing: TFacingShort } | null;
   output: string;
-  status: "idle" | "loading" | "failed";
 }
 
 const initialState: GameState = {
@@ -33,18 +34,7 @@ const initialState: GameState = {
   ],
   robot: null,
   output: "",
-  status: "idle",
 };
-
-export interface IPlaceRobotValue {
-  row: number;
-  col: number;
-  facing: TFacingShort;
-}
-export interface IPlaceWallValue {
-  row: number;
-  col: number;
-}
 
 export const gameSlice = createSlice({
   name: "game",
@@ -58,7 +48,7 @@ export const gameSlice = createSlice({
     },
     placeRobot: (state, action: PayloadAction<IPlaceRobotValue>) => {
       const { row, col, facing } = action.payload;
-      if (isCellValid(row, col)) {
+      if (isCellInRange(row, col)) {
         // Clear last position
         if (state.robot) {
           state.grid[5 - state.robot.row][state.robot.col - 1] = _;
@@ -73,7 +63,7 @@ export const gameSlice = createSlice({
     },
     placeWall: (state, action: PayloadAction<IPlaceWallValue>) => {
       const { row, col } = action.payload;
-      if (isCellValid(row, col)) {
+      if (isCellInRange(row, col)) {
         // Check robot not in place
         if (state.robot && state.robot.row === row && state.robot.col === col) {
           return;
@@ -103,7 +93,7 @@ export const gameSlice = createSlice({
             break;
         }
 
-        if (!isCellValid(newRow, newCol)) return;
+        if (!isCellInRange(newRow, newCol)) return;
 
         // Get target cell value
         const target = state.grid[5 - newRow][newCol - 1];

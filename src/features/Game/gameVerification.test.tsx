@@ -22,8 +22,8 @@ function testSequence(testData: string, expected: string) {
   );
 
   // Get sequence commands element
-  const seqInput = screen.getByLabelText(
-    "Sequence commands"
+  const seqInput = screen.getByTestId(
+    "sequence-commands"
   ) as HTMLTextAreaElement;
 
   // Set value to test data

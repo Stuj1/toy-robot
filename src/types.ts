@@ -23,3 +23,14 @@ export const RIGHT = "RIGHT";
 export const REPORT = "REPORT";
 export const PLACE_WALL = "PLACE_WALL";
 export const PLACE_ROBOT = "PLACE_ROBOT";
+
+export interface IPlaceRobotValue {
+  row: number;
+  col: number;
+  facing: TFacingShort;
+}
+
+export interface IPlaceWallValue {
+  row: number;
+  col: number;
+}
