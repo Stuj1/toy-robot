@@ -25,12 +25,12 @@ import {
  * @param instructions
  */
 export function translateInstructionsToActions(instructions: string): Action[] {
-  const lines = instructions.replace(/\r\n/g, "\n").split("\n");
+  const lines = instructions.split(/\r?\n|\r/).map((s) => s.trimEnd());
 
   const actions: (Action | undefined)[] = lines.map(
     (line: string): Action | undefined => {
       // Get parts of the instruction
-      const [action, args] = line.split(" ");
+      const [action, args] = line.trim().split(" ");
 
       // Lookup correct action
       if (action === MOVE) return moveRobot();
@@ -58,7 +58,7 @@ export function translateInstructionsToActions(instructions: string): Action[] {
       }
       if (action === PLACE_WALL) {
         const row = Number(args.split(",")[0]);
-        const col = Number(args.split(",")[1]);
+        const col = Number(args.split(",")[1].trim());
         if (!isNaN(row) && !isNaN(col) && isCellInRange(row, col)) {
           const pv: IPlaceWallValue = { row, col };
           return placeWall(pv);
@@ -71,6 +71,8 @@ export function translateInstructionsToActions(instructions: string): Action[] {
   return actions.filter((action) => !!action) as Action[];
 }
 
+let timeoutId: NodeJS.Timeout;
+
 /**
  * Executes provided actions in sequence using displatch
  * @param actions
@@ -82,12 +84,13 @@ export function executeActionsInSequence(
   dispatch: Dispatch,
   delay: number = 500
 ) {
+  clearTimeout(timeoutId);
   let i = 0;
   function next() {
     if (i < actions.length) {
       dispatch(actions[i]);
       i++;
-      setTimeout(next, delay);
+      timeoutId = setTimeout(next, delay);
     }
   }
   next();

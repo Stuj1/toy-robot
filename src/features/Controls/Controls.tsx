@@ -32,10 +32,18 @@ const Controls = () => {
     facing: N,
   });
 
-  const [list, setList] = useState("PLACE_ROBOT 2,3,NORTH");
+  const defaultSequence = `PLACE_ROBOT 2,2,WEST
+PLACE_WALL 1,1
+PLACE_WALL 2,2
+PLACE_WALL 1,3
+LEFT
+LEFT
+MOVE
+REPORT`;
+  const [sequence, setSequence] = useState(defaultSequence);
 
-  function runSequenceList() {
-    const actions = translateInstructionsToActions(list);
+  function runSequence() {
+    const actions = translateInstructionsToActions(sequence);
     executeActionsInSequence(actions, dispatch);
   }
 
@@ -141,17 +149,17 @@ const Controls = () => {
             data-testid="sequence-commands"
             cols={20}
             rows={10}
-            value={list}
-            onChange={(e) => setList(e.target.value)}
+            value={sequence}
+            onChange={(e) => setSequence(e.target.value)}
           />
         </div>
 
         <div className={styles.row}>
-          <button className={styles.primaryButton} onClick={runSequenceList}>
+          <button className={styles.primaryButton} onClick={runSequence}>
             GO
           </button>
           <button className={styles.button} onClick={() => dispatch(reset())}>
-            RESET
+            CLEAR
           </button>
         </div>
       </div>

@@ -1,6 +1,25 @@
-# Getting Started with Create React App
+# Toy Robot Game
+A simulation of a toy robot moving on a square tabletop, of dimensions 5 units x 5 units. The robot is free to roam around the surface of the table, but must be prevented from falling to destruction. Any movement that would result in the robot falling from the table must be prevented, however further valid movement commands must still be allowed.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Getting Started
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+## Prerequisites
+- Node.js
+- npm or yarn
+
+
+## Installing
+Clone the repository to your local machine
+Copy code
+git clone https://github.com/<username>/toy-robot-game.git
+
+## Install the dependencies
+
+### `npm install`
+or
+### `yarn`
+
 
 ## Available Scripts
 
@@ -38,6 +57,52 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+
+
+## Built With
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+- Node.js: JavaScript runtime for building server-side applications
+- TypeScript: A strict syntactical superset of JavaScript that adds optional static typing
+- React: A JavaScript library for building user interfaces
+- redux: A predictable state container for JavaScript apps
+- react-redux-toolkit: A set of utilities that helps to simplify the usage of the redux library
+- Testing Library (react): A set of tools to test the behavior of React components
+- Sass: CSS preprocessor that helps you write efficient and maintainable stylesheets.
+
+## Authors
+Stuart Jennings - Initial work - Stuj1
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+## Usage
+
+### Using the controls
+Use the control buttons to send direct commands to the robot.
+For placement of robot and walls you can specify the coordinates (row, col) and facing direction.
+Click report to show the robot's current position and direction.
+
+### Using the Sequence commands
+Specify a sequence of commands, on separate lines. These will run in order with a 1 second delay.
+The following commands are acceptable: 
+
+- PLACE_ROBOT ROW,COL,FACING - place the robot on the table in position ROW,COL and facing NORTH, SOUTH, EAST or WEST
+- PLACE_WALL ROW,COL - place a wall on the table in position ROW,COL
+- MOVE - move the robot one unit forward in the direction it is currently facing
+- LEFT - rotate the robot 90 degrees counter-clockwise
+- RIGHT - rotate the robot 90 degrees clockwise
+- REPORT - announce the row, column and direction of the robot
+
+
+## Follow up tasks:
+
+- Cancel previous timers on reset and new runs
+- More validation - e.g. maximum number of commands in sequence
+- General tidy up - this was put together very quickly! I'd love a bit more time to make sure everything is where it should be.
 
 ## Learn More
 
