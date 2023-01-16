@@ -1,35 +1,48 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
-import {_, X, N, E, S, W, TCHAR, TFACING} from "../../types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
+import {
+  _,
+  X,
+  N,
+  E,
+  S,
+  W,
+  TChar,
+  TFacingShort,
+  NORTH,
+  EAST,
+  SOUTH,
+  WEST,
+} from "../../types";
 
 export interface GameState {
-  grid: TCHAR[][];
-  robot: { row: number, col: number, facing: TFACING } | null;
+  grid: TChar[][];
+  robot: { row: number; col: number; facing: TFacingShort } | null;
   output: string;
-  status: 'idle' | 'loading' | 'failed';
+  status: "idle" | "loading" | "failed";
 }
 
 const initialState: GameState = {
   grid: [
-    [_,_,_,_,_,],
-    [_,_,_,_,_,],
-    [_,_,_,_,_,],
-    [_,_,_,_,_,],
-    [_,_,_,_,_,],
+    [_, _, _, _, _],
+    [_, _, _, _, _],
+    [_, _, _, _, _],
+    [_, _, _, _, _],
+    [_, _, _, _, _],
   ],
   robot: null,
   output: "",
-  status: 'idle',
+  status: "idle",
 };
 
 export interface IPlaceRobotValue {
-  row: number,
-  col: number,
-  facing: TFACING;
+  row: number;
+  col: number;
+  facing: TFacingShort;
 }
 export interface IPlaceWallValue {
-  row: number,
-  col: number,
+  row: number;
+  col: number;
 }
 
 function isCellValid(row: number, col: number) {
@@ -37,7 +50,7 @@ function isCellValid(row: number, col: number) {
 }
 
 export const gameSlice = createSlice({
-  name: 'game',
+  name: "game",
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
@@ -47,7 +60,7 @@ export const gameSlice = createSlice({
       state.output = initialState.output;
     },
     placeRobot: (state, action: PayloadAction<IPlaceRobotValue>) => {
-      const {row, col, facing} = action.payload;
+      const { row, col, facing } = action.payload;
       if (isCellValid(row, col)) {
         // Clear last position
         if (state.robot) {
@@ -58,11 +71,11 @@ export const gameSlice = createSlice({
         state.grid[5 - row][col - 1] = facing;
 
         // Update robot position
-        state.robot = {row, col, facing};
+        state.robot = { row, col, facing };
       }
     },
     placeWall: (state, action: PayloadAction<IPlaceWallValue>) => {
-      const {row, col} = action.payload;
+      const { row, col } = action.payload;
       if (isCellValid(row, col)) {
         // Check robot not in place
         if (state.robot && state.robot.row === row && state.robot.col === col) {
@@ -109,10 +122,9 @@ export const gameSlice = createSlice({
           state.robot = {
             ...state.robot,
             row: newRow,
-            col: newCol
+            col: newCol,
           };
         }
-
       }
     },
     leftRobot: (state) => {
@@ -131,7 +143,8 @@ export const gameSlice = createSlice({
             state.robot.facing = S;
             break;
         }
-        state.grid[5 - state.robot.row][state.robot.col - 1] = state.robot.facing;
+        state.grid[5 - state.robot.row][state.robot.col - 1] =
+          state.robot.facing;
       }
     },
     rightRobot: (state) => {
@@ -150,25 +163,34 @@ export const gameSlice = createSlice({
             state.robot.facing = N;
             break;
         }
-        state.grid[5 - state.robot.row][state.robot.col - 1] = state.robot.facing;
+        state.grid[5 - state.robot.row][state.robot.col - 1] =
+          state.robot.facing;
       }
     },
     report: (state) => {
       if (state.robot) {
         const { row, col, facing } = state.robot;
         const directions = {
-          N: "NORTH",
-          E: "EAST",
-          S: "SOUTH",
-          W: "WEST",
+          N: NORTH,
+          E: EAST,
+          S: SOUTH,
+          W: WEST,
         };
         state.output = `${row},${col},${directions[facing]}`;
       }
-    }
+    },
   },
 });
 
-export const { leftRobot, rightRobot, placeRobot, moveRobot, placeWall, report, reset } = gameSlice.actions;
+export const {
+  leftRobot,
+  rightRobot,
+  placeRobot,
+  moveRobot,
+  placeWall,
+  report,
+  reset,
+} = gameSlice.actions;
 
 // Get the grid from state
 export const selectGrid = (state: RootState) => state.game.grid;

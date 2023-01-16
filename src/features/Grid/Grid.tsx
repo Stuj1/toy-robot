@@ -1,10 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC } from "react";
 import { useAppSelector } from "../../app/hooks";
-import {
-  selectGrid,
-} from '../game/gameSlice';
+import { selectGrid } from "../game/gameSlice";
 import GridCell from "../GridCell/GridCell";
-import {TCHAR} from "../../types";
+import { TChar } from "../../types";
 
 const Grid: FC = () => {
   const grid = useAppSelector(selectGrid);
@@ -13,10 +11,10 @@ const Grid: FC = () => {
     <div>
       <table cellSpacing={0}>
         <tbody>
-          {grid.map((rowArray: TCHAR[], rIndex: number) => {
+          {grid.map((rowArray: TChar[], rIndex: number) => {
             return (
               <tr key={`row-${rIndex}`}>
-                {rowArray.map((cell: TCHAR, cIndex: number) => {
+                {rowArray.map((cell: TChar, cIndex: number) => {
                   return (
                     <GridCell key={`cell-${rIndex}-${cIndex}`} type={cell} />
                   );
@@ -27,6 +25,6 @@ const Grid: FC = () => {
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 export default Grid;

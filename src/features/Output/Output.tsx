@@ -3,7 +3,6 @@ import { useAppSelector } from "../../app/hooks";
 import { selectOutput } from "../game/gameSlice";
 
 const Output: FC = () => {
-
   const output = useAppSelector(selectOutput);
 
   return (
@@ -11,7 +10,7 @@ const Output: FC = () => {
       <label>Output:</label>
       <div data-testid="print-output">{output}</div>
     </div>
-  )
-}
+  );
+};
 
 export default Output;
