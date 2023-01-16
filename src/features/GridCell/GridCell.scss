@@ -1,6 +1,6 @@
 .cell {
   border: solid 20px white;
-  outline: solid 1px gray;
+  box-shadow: 0 0 2px gray;
   width: 25px;
   height: 25px;
 }
@@ -13,18 +13,17 @@
 .cell-S,
 .cell-W {
   background-color: black;
-  color: white;
   cursor: pointer;
 }
 .cell-N {
-  border-top-color: yellow;
+  border-top-color: gold;
 }
 .cell-E {
-  border-right-color: yellow;
+  border-right-color: gold;
 }
 .cell-S {
-  border-bottom-color: yellow;
+  border-bottom-color: gold;
 }
 .cell-W {
-  border-left-color: yellow;
+  border-left-color: gold;
 }

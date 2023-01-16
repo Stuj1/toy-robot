@@ -7,9 +7,10 @@ import {
   placeWall,
   rightRobot,
   report,
-} from "../features/game/gameSlice";
+} from "../features/Game/gameSlice";
 import { Action, Dispatch } from "@reduxjs/toolkit";
 import {
+  FACINGFULL,
   LEFT,
   MOVE,
   PLACE_ROBOT,
@@ -36,13 +37,18 @@ export function translateInstructionsToActions(instructions: string) {
     if (action === RIGHT) return rightRobot();
     if (action === REPORT) return report();
     if (action === PLACE_ROBOT) {
-      const [iRow, iCol, iFacing] = args.split(",");
-      const pv: IPlaceRobotValue = {
-        row: Number(iRow),
-        col: Number(iCol),
-        facing: iFacing.charAt(0) as TFacingShort,
-      };
-      return placeRobot(pv);
+      const [row, col, facing] = args.split(",");
+      if (
+        isCellValid(Number(row), Number(col)) &&
+        FACINGFULL.includes(facing)
+      ) {
+        const pv: IPlaceRobotValue = {
+          row: Number(row),
+          col: Number(col),
+          facing: facing.charAt(0) as TFacingShort,
+        };
+        return placeRobot(pv);
+      }
     }
     if (action === PLACE_WALL) {
       const [iRow, iCol] = args.split(",");
@@ -75,4 +81,8 @@ export function executeActionsInSequence(
     }
   }
   next();
+}
+
+export function isCellValid(row: number, col: number) {
+  return row >= 1 && row <= 5 && col >= 1 && col <= 5;
 }

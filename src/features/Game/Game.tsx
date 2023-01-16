@@ -14,10 +14,12 @@ export function Game() {
     <div>
       <h1>Toy Robot Game</h1>
       <StyledDiv>
-        <Grid />
+        <div>
+          <Grid />
+          <Output />
+        </div>
         <Controls />
       </StyledDiv>
-      <Output />
     </div>
   );
 }

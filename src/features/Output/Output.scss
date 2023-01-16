@@ -1,0 +1,11 @@
+.output-panel {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  height: 100px;
+  background: radial-gradient(circle at 10% 20%, rgb(253, 193, 104) 0%, rgb(251, 128, 128) 90%);
+
+  span {
+    font-size: 12px;
+  }
+}

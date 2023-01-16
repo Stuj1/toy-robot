@@ -5,7 +5,7 @@
 .row {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
 }
 
 .row > button {
@@ -58,6 +58,12 @@
   background-color: rgba(112, 76, 182, 0.2);
 }
 
+.primaryButton {
+  composes: button;
+  background-color: #704cb6;
+  color: white;
+}
+
 .asyncButton {
   composes: button;
   position: relative;
@@ -85,12 +91,11 @@
 .buttonGroupWrapper {
   padding: 5px;
   border-radius: 5px;
-  border: solid 1px palegoldenrod;
-  /*background-color: palegoldenrod;*/
+  border: solid 1px rebeccapurple;
+  display: flex;
+  gap: 4px;
 }
 
-.output {
-  width: 100px;
-  height: 30px;
-  border: solid 1px gray;
+.label {
+  font-size: 18px;
 }

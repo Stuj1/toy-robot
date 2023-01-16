@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Controls.module.css";
-import { N, E, S, W } from "../../types";
+import "./Controls.scss";
+import { N, FACINGSHORT, FACINGFULL } from "../../types";
 import {
   IPlaceRobotValue,
   IPlaceWallValue,
@@ -11,7 +12,7 @@ import {
   report,
   reset,
   rightRobot,
-} from "../game/gameSlice";
+} from "../Game/gameSlice";
 import { useAppDispatch } from "../../app/hooks";
 import {
   executeActionsInSequence,
@@ -35,15 +36,26 @@ const Controls = () => {
     executeActionsInSequence(actions, dispatch);
   }
 
+  function handleToggleFacing() {
+    const index = FACINGSHORT.indexOf(robot.facing);
+    const newIndex = index < FACINGSHORT.length - 1 ? index + 1 : 0;
+    setRobot({
+      ...robot,
+      facing: FACINGSHORT[newIndex],
+    });
+  }
+
+  const toggleFacingDisplay = FACINGFULL[FACINGSHORT.indexOf(robot.facing)];
+
   return (
-    <div className={styles.controls}>
+    <div className="controls">
       <div className={styles.row}>
         <div className={styles.buttonGroupWrapper}>
           <button
-            className={styles.button}
+            className={styles.primaryButton}
             onClick={() => dispatch(placeRobot(robot))}
           >
-            PLACE_ROBOT
+            PLACE ROBOT
           </button>
           <input
             className={styles.textbox}
@@ -67,23 +79,8 @@ const Controls = () => {
               })
             }
           />
-          <button
-            className={styles.button}
-            onClick={() =>
-              setRobot({
-                ...robot,
-                facing:
-                  robot.facing === N
-                    ? E
-                    : robot.facing === E
-                    ? S
-                    : robot.facing === S
-                    ? W
-                    : N,
-              })
-            }
-          >
-            {robot.facing}
+          <button className={styles.button} onClick={handleToggleFacing}>
+            {toggleFacingDisplay}
           </button>
         </div>
       </div>
@@ -91,10 +88,10 @@ const Controls = () => {
       <div className={styles.row}>
         <div className={styles.buttonGroupWrapper}>
           <button
-            className={styles.button}
+            className={styles.primaryButton}
             onClick={() => dispatch(placeWall(wall))}
           >
-            PLACE_WALL
+            PLACE WALL
           </button>
           <input
             className={styles.textbox}
@@ -131,7 +128,9 @@ const Controls = () => {
 
       <div>
         <div className={styles.row}>
-          <label htmlFor="sequence-commands">Sequence commands</label>
+          <label htmlFor="sequence-commands" className={styles.label}>
+            Sequence commands:
+          </label>
         </div>
         <div className={styles.row}>
           <textarea
@@ -144,7 +143,7 @@ const Controls = () => {
         </div>
 
         <div className={styles.row}>
-          <button className={styles.asyncButton} onClick={runSequenceList}>
+          <button className={styles.primaryButton} onClick={runSequenceList}>
             GO
           </button>
           <button className={styles.button} onClick={() => dispatch(reset())}>

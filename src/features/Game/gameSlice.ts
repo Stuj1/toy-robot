@@ -14,6 +14,7 @@ import {
   SOUTH,
   WEST,
 } from "../../types";
+import { isCellValid } from "../../services/services";
 
 export interface GameState {
   grid: TChar[][];
@@ -43,10 +44,6 @@ export interface IPlaceRobotValue {
 export interface IPlaceWallValue {
   row: number;
   col: number;
-}
-
-function isCellValid(row: number, col: number) {
-  return row >= 1 && row <= 5 && col >= 1 && col <= 5;
 }
 
 export const gameSlice = createSlice({

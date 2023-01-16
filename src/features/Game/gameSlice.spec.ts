@@ -1,7 +1,7 @@
 import gameReducer, { GameState, placeRobot, placeWall } from "./gameSlice";
 import { _, N, X } from "../../types";
 
-describe("game reducer", () => {
+describe("Game reducer", () => {
   const initialState: GameState = {
     grid: [
       [_, _, _, _, _],

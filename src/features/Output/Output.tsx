@@ -1,14 +1,19 @@
 import React, { FC } from "react";
 import { useAppSelector } from "../../app/hooks";
-import { selectOutput } from "../game/gameSlice";
+import { selectOutput } from "../Game/gameSlice";
+import "./Output.scss";
 
 const Output: FC = () => {
   const output = useAppSelector(selectOutput);
 
   return (
-    <div>
-      <label>Output:</label>
-      <div data-testid="print-output">{output}</div>
+    <div className="output-panel">
+      {output && (
+        <>
+          <span>Output:</span>
+          <div data-testid="print-output">{output}</div>
+        </>
+      )}
     </div>
   );
 };
