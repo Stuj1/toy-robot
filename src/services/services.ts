@@ -5,7 +5,7 @@ import {
   placeWall,
   rightRobot,
   report,
-} from "../features/Game/gameSlice";
+} from "../components/Game/gameSlice";
 import { Action, Dispatch } from "@reduxjs/toolkit";
 import {
   FACINGFULL,
