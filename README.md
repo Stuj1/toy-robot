@@ -106,6 +106,7 @@ The following commands are acceptable:
 - Better timer handling - Cancel timers on reset, probably better to use redux state for this.
 - More validation - e.g. maximum number of commands in sequence
 - General tidy up - this was put together very quickly! I'd love a bit more time to make sure everything is where it should be.
+- The focus in this project was not on styling. It needs tidying up - there is a mix of sass, css modules and css-in-js! This is just a hangup from the CRA template and adding things in quickly.
 
 ## Learn More
 
