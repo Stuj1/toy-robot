@@ -2,36 +2,25 @@ export const NORTH = "NORTH";
 export const EAST = "EAST";
 export const SOUTH = "SOUTH";
 export const WEST = "WEST";
-export const DIRECTIONS = [NORTH, EAST, SOUTH, WEST] as const;
-export type TFacing = (typeof DIRECTIONS)[number];
-// export type TFacing = TNorth | TEast | TSouth | TWest;
+export const DIRECTIONS = [NORTH, EAST, SOUTH, WEST];
 
-export type TActionPlaceRobot = "PLACE_ROBOT";
-export type TActionPlaceWall = "PLACE_WALL";
-export type TActionMove = "MOVE";
-export type TActionLeft = "LEFT";
-export type TActionRight = "RIGHT";
-export type TActionReport = "REPORT";
-export type TActionType =
-  | TActionMove
-  | TActionPlaceRobot
-  | TActionPlaceWall
-  | TActionLeft
-  | TActionRight
-  | TActionReport;
+export const N = "N";
+export const E = "E";
+export const S = "S";
+export const W = "W";
+export const _ = "_";
+export const X = "X";
 
-export type TInstruction = `${TActionType}`;
+export const FACING = [N, E, S, W] as const;
+export const VALUES = [_, X, N, E, S, W] as const;
+export type TFACING = (typeof FACING)[number];
+export type TValues = (typeof VALUES)[number];
+export type TCHAR = TValues;
 
-export interface IRobot {
-  row: number;
-  col: number;
-  facing: TFacing;
-}
+export const MOVE = "MOVE";
+export const LEFT = "LEFT";
+export const RIGHT = "RIGHT";
+export const REPORT = "REPORT";
+export const PLACE_WALL = "PLACE_WALL";
+export const PLACE_ROBOT = "PLACE_ROBOT";
 
-export interface ICell {
-  row: number;
-  col: number;
-  type: string | null;
-}
-
-export type TCell = "-" | "X" | "N" | "E" | "S" | "W";

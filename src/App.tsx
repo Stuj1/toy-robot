@@ -1,6 +1,6 @@
-import React from "react";
-import "./App.css";
-import Game from "./components/Game/Game";
+import React from 'react';
+import { Game } from './features/game/Game';
+import './App.css';
 
 function App() {
   return (

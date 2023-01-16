@@ -1,0 +1,19 @@
+.cell {
+    border: solid 20px white;
+    outline: solid 1px gray;
+    width: 25px;
+    height: 25px;
+}
+.cell-X {
+    background-color: gray;
+    border-color: gray;
+}
+.cell-N, .cell-E, .cell-S, .cell-W {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+.cell-N { border-top-color: yellow; }
+.cell-E { border-right-color: yellow; }
+.cell-S { border-bottom-color: yellow; }
+.cell-W { border-left-color: yellow; }
